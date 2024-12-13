@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Crypto}",
+            "name": "Debug Crypto",
+            "program": "${workspaceFolder:Crypto}/.build/debug/Crypto",
+            "preLaunchTask": "swift: Build Debug Crypto"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Crypto}",
+            "name": "Release Crypto",
+            "program": "${workspaceFolder:Crypto}/.build/release/Crypto",
+            "preLaunchTask": "swift: Build Release Crypto"
+        }
+    ]
+}
