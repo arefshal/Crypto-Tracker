@@ -10,6 +10,8 @@ import SwiftUI
 struct CoinRowView: View {
     let coin : CoinModel
     let showHoldingColumn : Bool
+    @EnvironmentObject private var vm: HomeViewModel
+    
     var body: some View {
         HStack(spacing: 0) {
             leftColumn
@@ -21,9 +23,36 @@ struct CoinRowView: View {
 
         }
         .font(.subheadline)
+        .contentShape(Rectangle())
+        .if(showHoldingColumn) { view in
+            view
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button(role: .destructive) {
+                        withAnimation {
+                            deletePortfolio()
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive) {
+                        withAnimation {
+                            deletePortfolio()
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+        }
+    }
+    
+    private func deletePortfolio() {
+        if showHoldingColumn {
+            vm.updatePortfolio(coin: coin, amount: 0)
+        }
     }
 }
-
 
 struct CoinRowView_Previews: PreviewProvider {
     static var previews: some View {
@@ -69,4 +98,14 @@ extension CoinRowView {
         .foregroundStyle(Color.theme.accent)
         .frame(width: UIScreen.main.bounds.width / 3 ,alignment: .trailing)
     }   
+}
+
+extension View {
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
 }
