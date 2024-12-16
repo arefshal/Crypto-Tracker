@@ -55,21 +55,30 @@ extension PortfolioView {
     private var coinLogoList: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 10) {
-                ForEach(vm.allCoins) { coin in
-                    CoinLogoView(coin: coin)
-                        .frame(width: 75)
-                        .padding(4)
-                        .onTapGesture {
-                            withAnimation(.easeIn) {
-                                updateSelectedCoin(coin: coin)
-                            }
+                ForEach(vm.sortedFilteredCoins) { coin in
+                    VStack {
+                        CoinLogoView(coin: coin)
+                            .frame(width: 75)
+                        if let holdings = vm.portfolioCoins.first(where: { $0.id == coin.id })?.currentHoldings,
+                           holdings > 0 {
+                            Text(holdings.asNumberString())
+                                .font(.caption)
+                                .foregroundColor(Color.theme.accent)
                         }
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(selectedCoin?.id == coin.id ? 
-                                       Color.theme.green : Color.clear,
-                                       lineWidth: 1)
-                        )
+                    }
+                    .frame(width: 75)
+                    .padding(4)
+                    .onTapGesture {
+                        withAnimation(.easeIn) {
+                            updateSelectedCoin(coin: coin)
+                        }
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(selectedCoin?.id == coin.id ? 
+                                   Color.theme.green : Color.clear,
+                                   lineWidth: 1)
+                    )
                 }
             }
             .frame(height: 120)
