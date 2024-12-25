@@ -29,7 +29,7 @@ class DeveloperPreview {
             low24h: 49000,
             priceChangePercentage24h: 2.5,
             sparklineIn7d: nil,
-            currentHoldings: 2.0
+            currentHoldings: 2.0, lastUpdated: ""
         )
     let sampleCoin = CoinModel(
             id: "bitcoin",
@@ -44,7 +44,7 @@ class DeveloperPreview {
             low24h: 49000,
             priceChangePercentage24h: 2.5,
             sparklineIn7d: nil,
-            currentHoldings: 2.0
+            currentHoldings: 2.0, lastUpdated: ""
         )
     let sampleStat = StatisticsModel(title: "marketgap", value: "2.1B ", percentageChange: -1.2)
     
