@@ -21,6 +21,7 @@ class CoinModel: Identifiable , Codable{
     let priceChangePercentage24h: Double?
     let sparklineIn7d: Sparkline?
     let currentHoldings: Double?
+    let lastUpdated: String?
     var currentHoldingsValue: Double {
         return (currentHoldings ?? 0) * currentPrice
     }
@@ -39,8 +40,9 @@ class CoinModel: Identifiable , Codable{
         case priceChangePercentage24h = "price_change_percentage_24h"
         case sparklineIn7d = "sparkline_in_7d"
         case currentHoldings
+        case lastUpdated = "last_updated"
     }
-    init(id: String, symbol: String, name: String, image: String, currentPrice: Double, marketCap: Double?, marketCapRank: Int?, totalVolume: Double?, high24h: Double?, low24h: Double?, priceChangePercentage24h: Double?, sparklineIn7d: Sparkline?, currentHoldings: Double?) {
+    init(id: String, symbol: String, name: String, image: String, currentPrice: Double, marketCap: Double?, marketCapRank: Int?, totalVolume: Double?, high24h: Double?, low24h: Double?, priceChangePercentage24h: Double?, sparklineIn7d: Sparkline?, currentHoldings: Double?, lastUpdated: String?) {
         self.id = id
         self.symbol = symbol
         self.name = name
@@ -54,10 +56,11 @@ class CoinModel: Identifiable , Codable{
         self.priceChangePercentage24h = priceChangePercentage24h
         self.sparklineIn7d = sparklineIn7d
         self.currentHoldings = currentHoldings
+        self.lastUpdated = lastUpdated
     }
     
     func updateHoldings(amount: Double) -> CoinModel {
-        return CoinModel(id: id, symbol: symbol, name: name, image: image, currentPrice: currentPrice, marketCap: marketCap, marketCapRank: marketCapRank, totalVolume: totalVolume, high24h: high24h, low24h: low24h, priceChangePercentage24h: priceChangePercentage24h, sparklineIn7d: sparklineIn7d, currentHoldings: amount)
+        return CoinModel(id: id, symbol: symbol, name: name, image: image, currentPrice: currentPrice, marketCap: marketCap, marketCapRank: marketCapRank, totalVolume: totalVolume, high24h: high24h, low24h: low24h, priceChangePercentage24h: priceChangePercentage24h, sparklineIn7d: sparklineIn7d, currentHoldings: amount, lastUpdated: lastUpdated)
     }
 
     var rank: Int {
