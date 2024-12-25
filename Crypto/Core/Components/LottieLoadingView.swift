@@ -1,3 +1,11 @@
+//
+//  LottieLoadingView.swift
+//  Crypto
+//
+//  Created by Aref on 12/18/24.
+//
+
+import SwiftUI
 import Lottie
 
 struct LottieLoadingView: UIViewRepresentable {
@@ -13,4 +21,9 @@ struct LottieLoadingView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: LottieAnimationView, context: Context) {}
+}
+struct LottieLoadingView_Previews: PreviewProvider {
+    static var previews: some View {
+        LottieLoadingView(animationName: "Artboard 1", loopMode: .loop)
+    }
 }
