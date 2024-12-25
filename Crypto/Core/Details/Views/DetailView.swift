@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct DetailView: View {
+    let coin: CoinModel
+    @Binding var showDetailView: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(coin.name)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showDetailView = false
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
     }
 }
 
-#Preview {
-    DetailView()
+struct DetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            DetailView(coin: dev.sampleCoin, showDetailView: .constant(true))
+        }
+    }
 }
