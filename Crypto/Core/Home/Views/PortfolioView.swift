@@ -56,17 +56,8 @@ extension PortfolioView {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 10) {
                 ForEach(vm.sortedFilteredCoins) { coin in
-                    VStack {
                         CoinLogoView(coin: coin)
                             .frame(width: 75)
-                        if let holdings = vm.portfolioCoins.first(where: { $0.id == coin.id })?.currentHoldings,
-                           holdings > 0 {
-                            Text(holdings.asNumberString())
-                                .font(.caption)
-                                .foregroundColor(Color.theme.accent)
-                        }
-                    }
-                    .frame(width: 75)
                     .padding(4)
                     .onTapGesture {
                         withAnimation(.easeIn) {
