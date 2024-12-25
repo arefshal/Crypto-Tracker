@@ -1,6 +1,7 @@
 # Crypto App
 
 A modern iOS application for tracking and monitoring cryptocurrency prices in real-time.
+![ScreenRecording2024-12-25at1 33 42PM-ezgif com-optimize](https://github.com/user-attachments/assets/e13b1538-b064-4779-9f8d-f62ac0a472d4)
 
 ## Technologies Used
 
