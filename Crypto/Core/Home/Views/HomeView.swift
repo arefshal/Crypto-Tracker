@@ -12,6 +12,8 @@ struct HomeView: View {
     @EnvironmentObject private var vm: HomeViewModel
     @State private var showPortfolio: Bool = false
     @State private var showPortfolioView: Bool = false
+    @State private var selectedCoin: CoinModel?
+    @State private var showDetailView: Bool = false
 
     var body: some View {
         ZStack {
@@ -45,6 +47,11 @@ struct HomeView: View {
                 NavigationView {
                     PortfolioView()
                         .environmentObject(vm)
+                }
+            }
+            .navigationDestination(isPresented: $showDetailView) {
+                if let coin = selectedCoin {
+                    DetailView(coin: coin, showDetailView: $showDetailView)
                 }
             }
         }
@@ -101,12 +108,13 @@ extension HomeView {
                     .listRowBackground(Color.clear)
                 }
                 ForEach(vm.allCoins) { coin in
-                   
-                        CoinRowView(coin: coin, showHoldingColumn: false)
-                    
-                  
-                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
-                    .listRowBackground(Color.theme.background)
+                    CoinRowView(coin: coin, showHoldingColumn: false)
+                        .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                        .listRowBackground(Color.theme.background)
+                        .onTapGesture {
+                            selectedCoin = coin
+                            showDetailView.toggle()
+                        }
                 }
             }
             .listStyle(PlainListStyle())
@@ -129,6 +137,10 @@ extension HomeView {
                 CoinRowView(coin: coin, showHoldingColumn: true)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
                     .listRowBackground(Color.theme.background)
+                    .onTapGesture {
+                        selectedCoin = coin
+                        showDetailView.toggle()
+                    }
             }
         }
         .listStyle(PlainListStyle())
