@@ -17,10 +17,11 @@ struct CoinRowView: View {
             leftColumn
             Spacer()
             if showHoldingColumn {
-                centerColumn
+                holdingsColumn
+                totalPriceColumn
+            } else {
+                normalPriceColumn
             }
-            rightColumn
-
         }
         .font(.subheadline)
         .contentShape(Rectangle())
@@ -62,7 +63,7 @@ struct CoinRowView_Previews: PreviewProvider {
 
 extension CoinRowView {
     private var leftColumn : some View {
-        HStack {
+        HStack(spacing: 0) {
             Text("\(coin.marketCapRank ?? 0 )")
                 .foregroundStyle(Color.theme.secondaryText)
                 .frame(minWidth: 30)
@@ -73,31 +74,54 @@ extension CoinRowView {
                 .padding(.leading,6)
                 .foregroundStyle(Color.theme.accent)
         }
+        .frame(minWidth: 90, alignment: .leading)
     }
     
-    private var rightColumn  : some View {
-        VStack (alignment: .trailing) {
-            Text(coin.currentPrice.asCurrencyWith2Decimals())
-            Text(coin.priceChangePercentage24h?.asPercentString() ?? "0")
-                .foregroundStyle(
-                    (
-                        coin.priceChangePercentage24h ?? 0
-                    ) >= 0 ? Color.theme.green : Color.theme.red
-                )
+    private var holdingsColumn: some View {
+        VStack(alignment: .trailing) {
+            Text("Holdings")
+                .font(.caption)
+                .foregroundStyle(Color.theme.secondaryText)
+            Text((coin.currentHoldings ?? 0).asNumberString())
+                .bold()
+                .foregroundStyle(Color.theme.accent)
         }
-        .foregroundStyle(Color.theme.accent)
-        .frame(width: UIScreen.main.bounds.width / 3 ,alignment: .trailing)
+        .frame(width: UIScreen.main.bounds.width / 4, alignment: .trailing)
     }
     
-    private var centerColumn : some View {
-        VStack(spacing: 0) {
+    private var totalPriceColumn: some View {
+        VStack(alignment: .trailing) {
+            Text("Total")
+                .font(.caption)
+                .foregroundStyle(Color.theme.secondaryText)
             Text(coin.currentHoldingsValue.asCurrencyWith2Decimals())
                 .bold()
-            Text((coin.currentHoldings ?? 0).asNumberString())
+                .foregroundStyle(Color.theme.accent)
         }
-        .foregroundStyle(Color.theme.accent)
-        .frame(width: UIScreen.main.bounds.width / 3 ,alignment: .trailing)
-    }   
+        .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+    }
+    
+    private var normalPriceColumn : some View {
+        HStack(spacing: 4) {
+            VStack(alignment: .trailing) {
+                Text(coin.currentPrice.asCurrencyWith2Decimals())
+                    .bold()
+                    .foregroundStyle(Color.theme.accent)
+            }
+            .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+            
+            VStack(alignment: .trailing) {
+                Text(coin.priceChangePercentage24h?.asPercentString() ?? "")
+                    .foregroundStyle(
+                        (coin.priceChangePercentage24h ?? 0) >= 0 ?
+                        Color.theme.green :
+                        Color.theme.red
+                    )
+            }
+            .frame(width: UIScreen.main.bounds.width / 4.5, alignment: .trailing)
+        
+        }
+    }
 }
 
 extension View {
